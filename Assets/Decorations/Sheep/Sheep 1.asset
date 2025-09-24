@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Sheep 1
+  m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
+  m_AnimatedSprites:
+  - {fileID: 2319856288088244163, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -3562576923617104382, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -7349116212589438002, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -4662078214707794950, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -6617081139439527395, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -6189691028752884913, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: 7296908222152865420, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -2352777100355612254, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -3659949348702606643, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: 5630160346097760845, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: 5439255145328125195, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  - {fileID: -8736350461500244166, guid: cb872d097f0e08f40bbaa718b677f7ef, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
