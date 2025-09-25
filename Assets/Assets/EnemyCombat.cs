@@ -33,7 +33,6 @@ public class EnemyCombat : MonoBehaviour
 
     foreach (Collider2D player in hitPlayers)
     {
-
       Vector2 forward = (transform.localScale.x > 0) ? Vector2.right : Vector2.left;
       Vector2 dirToTarget = (player.transform.position - attackPoint.position).normalized;
 
@@ -81,6 +80,7 @@ public class EnemyCombat : MonoBehaviour
       }
     }
   }
+
   void OnDrawGizmosSelected()
   {
     if (attackPoint == null) return;
@@ -102,5 +102,4 @@ public class EnemyCombat : MonoBehaviour
     Gizmos.DrawLine(attackPoint.position, attackPoint.position + leftDir);
     Gizmos.DrawLine(attackPoint.position, attackPoint.position + rightDir);
   }
-
 }

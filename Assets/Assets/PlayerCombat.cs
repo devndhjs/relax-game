@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -46,8 +47,13 @@ public class PlayerCombat : MonoBehaviour
         enemyLayer
     );
 
+    HashSet<EnemyHealth> damaged = new HashSet<EnemyHealth>();
+
     foreach (Collider2D enemy in hitEnemies)
     {
+      EnemyHealth eh = enemy.GetComponent<EnemyHealth>();
+      if (eh == null || damaged.Contains(eh)) continue;
+
       Vector2 dirToTarget = (enemy.transform.position - attackPoint.position).normalized;
       Vector2 forward = GetFacingDirection();
 
@@ -56,10 +62,12 @@ public class PlayerCombat : MonoBehaviour
       if (angle <= attackAngle / 2f)
       {
         Debug.Log("Player trúng Enemy sau delay: " + enemy.name);
-        enemy.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+        eh.TakeDamage(damage, transform);
+        damaged.Add(eh); // đảm bảo không bị gọi lần 2
       }
     }
   }
+
 
   // Hướng mặt player dựa vào scale
   private Vector2 GetFacingDirection()

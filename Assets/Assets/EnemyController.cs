@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour
   private EnemyCombat combat;
   private EnemyHealth health;
 
+  private bool isAggro = false; // <--- Thêm cờ này
+
   void Start()
   {
     rb = GetComponent<Rigidbody2D>();
@@ -33,11 +35,11 @@ public class EnemyController : MonoBehaviour
     float distance = Vector2.Distance(transform.position, player.position);
 
     // check state
-    if (combat.CanAttackPlayer())
+    if (combat.CanAttackPlayer() && isAggro)
     {
       currentState = State.Attack;
     }
-    else if (distance <= chaseRange)
+    else if (distance <= chaseRange && isAggro)
     {
       currentState = State.Chase;
     }
@@ -85,5 +87,11 @@ public class EnemyController : MonoBehaviour
   public Vector2 GetFacingDirection()
   {
     return lastMoveDir;
+  }
+
+  // Hàm này gọi khi bị đánh
+  public void TriggerAggro()
+  {
+    isAggro = true;
   }
 }
