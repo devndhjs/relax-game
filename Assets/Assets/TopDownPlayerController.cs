@@ -10,9 +10,8 @@ public class TopDownPlayerController : MonoBehaviour, Controls.IPlayerActions
     private Controls controls;
     private Vector2 moveInput;
     private Animator anim;
-    private bool holdingAttack = false;
-    public GameObject attackHitbox;
-    private Collider2D hitboxCollider;
+
+    private PlayerCombat combat; // Tham chiếu combat
 
     void Awake()
     {
@@ -20,39 +19,29 @@ public class TopDownPlayerController : MonoBehaviour, Controls.IPlayerActions
         controls = new Controls();
         controls.Player.SetCallbacks(this);
         anim = GetComponent<Animator>();
-        hitboxCollider = attackHitbox.GetComponent<Collider2D>();
-        hitboxCollider.enabled = false;
+        combat = GetComponent<PlayerCombat>();
     }
 
-    void OnEnable()
-    {
-        controls.Player.Enable();
-    }
-
-    void OnDisable()
-    {
-        controls.Player.Disable();
-    }
+    void OnEnable() => controls.Player.Enable();
+    void OnDisable() => controls.Player.Disable();
 
     void FixedUpdate()
     {
+        // Di chuyển
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
 
         // Animation Idle/Walk
         bool walking = moveInput.sqrMagnitude > 0.01f;
         anim.SetBool("isWalking", walking);
 
+        // Flip hướng
         if (moveInput.x > 0.01f)
-        {
-            transform.localScale = new Vector3(1, 1, 1); // quay phải
-        }
+            transform.localScale = new Vector3(1, 1, 1);
         else if (moveInput.x < -0.01f)
-        {
-            transform.localScale = new Vector3(-1, 1, 1); // quay trái
-        }
+            transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    // --- Callback từ Controls.IPlayerActions ---
+    // --- Input System Callbacks ---
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -61,38 +50,8 @@ public class TopDownPlayerController : MonoBehaviour, Controls.IPlayerActions
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
-        {
-            holdingAttack = true;
-            anim.SetTrigger("isAttacking");
-        }
-        else if (context.canceled)
-        {
-            holdingAttack = false;
-        }
-    }
-
-    public void TryContinueAttack()
-    {
-        if (holdingAttack)
-        {
-            anim.SetTrigger("isAttacking");
-        }
-    }
-    public void EnableHitbox()
-    {
-        hitboxCollider.enabled = true;
-    }
-    public void DisableHitbox()
-    {
-        hitboxCollider.enabled = false;
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("Trúng enemy: " + other.name);
-            // Gọi hàm trừ máu enemy ở đây
-            // other.GetComponent<EnemyHealth>()?.TakeDamage(10);
-        }
+            combat.AttemptAttack();
+        // else if (context.canceled)
+        //     combat.StopAttack();
     }
 }
