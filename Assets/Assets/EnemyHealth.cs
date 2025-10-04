@@ -14,8 +14,9 @@ public class EnemyHealth : MonoBehaviour
   [Header("Knockback Settings")]
   public float knockbackDistance = 1f;
   public float knockbackSpeed = 10f;
+  public float stunDuration = 0.5f;
+  [HideInInspector] public bool isKnockback = false;
 
-  private bool isKnockback = false; // chặn knockback chồng
 
   void Start()
   {
@@ -52,12 +53,25 @@ public class EnemyHealth : MonoBehaviour
   {
     isKnockback = true;
 
+    // Chặn enemy di chuyển trong khi knockback
+    if (enemyController != null) enemyController.enabled = false;
+
     Vector2 dir = (transform.position - attackerPos).normalized;
     rb.velocity = dir * knockbackSpeed;  // đẩy ngay
 
     yield return new WaitForSeconds(knockbackDistance / knockbackSpeed);
 
     rb.velocity = Vector2.zero; // dừng lại
+
+    // Giữ choáng thêm 0.5s
+    yield return new WaitForSeconds(stunDuration);
+
+    // Bật lại nếu còn sống
+    if (!IsDead && enemyController != null)
+    {
+      enemyController.enabled = true;
+    }
+
     isKnockback = false;
   }
 

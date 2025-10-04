@@ -32,11 +32,13 @@ public class PlayerCombat : MonoBehaviour
     }
   }
 
+  [System.Obsolete]
   public void DoDamageWithDelay(float delay)
   {
     StartCoroutine(DoDamageDelayed(delay));
   }
 
+  [System.Obsolete]
   private IEnumerator DoDamageDelayed(float delay)
   {
     yield return new WaitForSeconds(delay);

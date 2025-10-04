@@ -34,6 +34,13 @@ public class EnemyController : MonoBehaviour
 
     float distance = Vector2.Distance(transform.position, player.position);
 
+    if (health.isKnockback)   // <- THÊM DÒNG NÀY
+    {
+      anim.SetBool("isWalking", false);
+      movement = Vector2.zero;
+      return;
+    }
+
     // check state
     if (combat.CanAttackPlayer() && isAggro)
     {
@@ -71,6 +78,7 @@ public class EnemyController : MonoBehaviour
 
   void FixedUpdate()
   {
+    if (health.isKnockback) return;
     if (movement != Vector2.zero)
     {
       rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
